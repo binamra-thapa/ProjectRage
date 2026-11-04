@@ -5,8 +5,9 @@ type FormData = {
   age: string
   location: string
   company: string
-  price: string
-  lowerPrice: string
+  sessionDuration: string
+  reasonablePrice: string
+  expectsGroupDiscount: string
   smash: string[]
   length: string
   likelihood: string
@@ -17,8 +18,9 @@ const initialForm: FormData = {
   age: "",
   location: "",
   company: "",
-  price: "",
-  lowerPrice: "",
+  sessionDuration: "",
+  reasonablePrice: "",
+  expectsGroupDiscount: "",
   smash: [],
   length: "",
   likelihood: "",
@@ -268,8 +270,8 @@ function App() {
       step === 0
         ? form.age && form.location.trim() && form.company
         : step === 1
-          ? form.price && form.lowerPrice && form.smash.length > 0
-          : form.length && form.likelihood
+          ? form.sessionDuration && form.reasonablePrice && form.smash.length > 0
+          : form.likelihood
     if (!valid) {
       setError("Choose an answer for each question to continue.")
       return
@@ -286,7 +288,7 @@ function App() {
   const submitFeedback = async (event: FormEvent) => {
     event.preventDefault()
     if (sending) return
-    if (!form.length || !form.likelihood) {
+    if (!form.likelihood) {
       setError("Choose an answer for each question to continue.")
       return
     }
@@ -719,23 +721,39 @@ function App() {
                     />
                     */}
                     <ChoiceGroup
-                      label="04 — What would you consider a reasonable price per person for a 15-20 minute Rage Room experience?"
+                      label="04 — How long would you want the actual smashing session to last?"
                       options={[
-                        "Under ₹300",
-                        "₹300 - ₹499",
-                        "₹500 - ₹699",
-                        "₹700 - ₹899",
-                        "₹900+",
+                        "5-10 minutes",
+                        "10-15 minutes",
+                        "15-20 minutes",
+                        "20-30 minutes",
+                        "Not sure",
                       ]}
-                      value={form.price}
-                      onChange={(value) => setField("price", value)}
+                      value={form.sessionDuration}
+                      onChange={(value) => setField("sessionDuration", value)}
                     />
                     <ChoiceGroup
-                      label="05 — Would a lower per-person price make you more likely to bring friends?"
-                      options={["Yes", "No", "Doesn't matter"]}
-                      value={form.lowerPrice}
-                      onChange={(value) => setField("lowerPrice", value)}
+                      label="05 — What would you consider a reasonable price per person for the experience?"
+                      options={[
+                        "Under ₹300",
+                        "₹300-₹499",
+                        "₹500-₹699",
+                        "₹700-₹899",
+                        "₹900+",
+                      ]}
+                      value={form.reasonablePrice}
+                      onChange={(value) => setField("reasonablePrice", value)}
                     />
+                    {/* Removed (restore with expectsGroupDiscount in validation):
+                    <ChoiceGroup
+                      label="06 — Would you expect the price per person to be lower when coming as a group?"
+                      options={["Yes", "No", "Doesn't matter to me"]}
+                      value={form.expectsGroupDiscount}
+                      onChange={(value) =>
+                        setField("expectsGroupDiscount", value)
+                      }
+                    />
+                    */}
                     <ChoiceGroup
                       label="06 — What would you most like to smash?"
                       options={[
@@ -754,14 +772,16 @@ function App() {
                 )}
                 {step === 2 && (
                   <div className="form-step">
+                    {/* Removed (restore with form.length in validation):
                     <ChoiceGroup
-                      label="07 — Preferred session length?"
+                      label="08 — Preferred session length?"
                       options={["10 minutes", "20 minutes", "30 minutes"]}
                       value={form.length}
                       onChange={(value) => setField("length", value)}
                     />
+                    */}
                     <ChoiceGroup
-                      label="08 — If this opened in Siliguri, would you try it?"
+                      label="07 — If this opened in Siliguri, would you try it?"
                       options={[
                         "Definitely",
                         "Probably",
@@ -773,7 +793,7 @@ function App() {
                     />
                     <label className="question">
                       <span>
-                        09 — Anything else we should know?{" "}
+                        08 — Anything else we should know?{" "}
                         <small>Optional</small>
                       </span>
                       <textarea
