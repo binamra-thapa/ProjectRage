@@ -37,6 +37,18 @@ const track = (event: string, detail?: Record<string, unknown>) => {
   )
 }
 
+const FORMSPREE_ID = import.meta.env.VITE_FORMSPREE_ID as string | undefined
+
+async function sendToFormspree(payload: Record<string, unknown>) {
+  if (!FORMSPREE_ID) throw new Error("Missing VITE_FORMSPREE_ID")
+  const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify(payload),
+  })
+  if (!response.ok) throw new Error(`Formspree responded ${response.status}`)
+}
+
 function Arrow({ direction = "right" }: { direction?: "right" | "down" }) {
   return (
     <svg
@@ -212,6 +224,8 @@ function App() {
   })
   const [reservationError, setReservationError] = useState("")
   const [paid, setPaid] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [feedbackId, setFeedbackId] = useState("")
   const packagesRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
@@ -274,12 +288,29 @@ function App() {
     }
   }
 
-  const submitFeedback = (event: FormEvent) => {
+  const submitFeedback = async (event: FormEvent) => {
     event.preventDefault()
+    if (sending) return
     if (!form.length || !form.likelihood) {
       setError("Choose an answer for each question to continue.")
       return
     }
+    const id = `fb-${Date.now().toString(36)}`
+    setSending(true)
+    try {
+      await sendToFormspree({
+        type: "feedback",
+        feedback_id: id,
+        ...form,
+        smash: form.smash.join(", "),
+      })
+    } catch {
+      setError("Couldn't send your feedback. Please try again.")
+      setSending(false)
+      return
+    }
+    setSending(false)
+    setFeedbackId(id)
     setSubmitted(true)
     track("feedback_submitted", { form })
     requestAnimationFrame(() =>
@@ -289,8 +320,9 @@ function App() {
     )
   }
 
-  const reserve = (event: FormEvent) => {
+  const reserve = async (event: FormEvent) => {
     event.preventDefault()
+    if (sending) return
     if (
       !reservation.name.trim() ||
       !/^\+?[0-9\s-]{8,15}$/.test(reservation.phone)
@@ -299,6 +331,22 @@ function App() {
       return
     }
     setReservationError("")
+    setSending(true)
+    try {
+      await sendToFormspree({
+        type: "early_access",
+        feedback_id: feedbackId,
+        name: reservation.name.trim(),
+        phone: reservation.phone.trim(),
+        email: reservation.email.trim(),
+        amount_intent: 99,
+      })
+    } catch {
+      setReservationError("Couldn't send your details. Please try again.")
+      setSending(false)
+      return
+    }
+    setSending(false)
     setPaid(true)
     track("reservation_interest_confirmed", { amount_intent: 99 })
   }
@@ -688,7 +736,9 @@ function App() {
                   {step < 2 ? (
                     <Button onClick={nextStep}>Continue</Button>
                   ) : (
-                    <Button type="submit">Submit feedback</Button>
+                    <Button type="submit">
+                      {sending ? "Sending…" : "Submit feedback"}
+                    </Button>
                   )}
                 </div>
               </form>
@@ -832,7 +882,9 @@ function App() {
                         {reservationError}
                       </p>
                     )}
-                    <Button type="submit">Confirm ₹99 interest</Button>
+                    <Button type="submit">
+                      {sending ? "Sending…" : "Confirm ₹99 interest"}
+                    </Button>
                     <p className="secure-note">
                       <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
                         <rect
