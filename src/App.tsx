@@ -827,13 +827,6 @@ function App() {
                         autoComplete="email"
                       />
                     </label>
-                    <div className="intent-note">
-                      <strong>No payment will be taken today.</strong>
-                      <span>
-                        This is an interest check to help us validate genuine
-                        demand.
-                      </span>
-                    </div>
                     {reservationError && (
                       <p className="form-error" role="alert">
                         {reservationError}
