@@ -557,6 +557,26 @@
   font: 600 21px 'Oswald';
 }
 .featured .per-person strong { color: var(--acid); }
+.pricing-notice {
+  margin-bottom: 16px;
+  padding: 22px;
+  background: var(--acid);
+  color: var(--ink);
+}
+.pricing-notice strong {
+  display: block;
+  font: 600 31px 'Oswald';
+  letter-spacing: -.025em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.pricing-notice p {
+  max-width: 570px;
+  margin: 10px 0 0;
+  color: #480505;
+  font-size: 12px;
+  line-height: 1.55;
+}
 .pricing-callout {
   margin-top: 16px;
   padding: 22px;

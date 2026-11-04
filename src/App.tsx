@@ -474,9 +474,9 @@ function App() {
               <div className="process-item" key={item}>
                 <span>0{index + 1}</span>
                 <strong>{item}</strong>
-                <i>
+                {/* <i>
                   <Arrow direction="down" />
-                </i>
+                </i> */}
               </div>
             ))}
           </div>
@@ -514,8 +514,14 @@ function App() {
           <SectionHeading
             eyebrow="Initial pricing"
             title="More people. Better value."
-            text="Starting at ₹499 solo. These are test prices—not final prices—and your feedback will help us get them right."
           />
+          <div className="pricing-notice">
+            <strong>Starting at ₹499 solo</strong>
+            <p>
+              These are test prices, not final prices and your feedback will
+              help us get them right.
+            </p>
+          </div>
           <div className="pricing-grid">
             {[
               ["Solo", "1 person", "499", "₹499 / person"],
@@ -623,7 +629,7 @@ function App() {
                       onChange={(value) => setField("age", value)}
                     />
                     <label className="question">
-                      <span>02 — Where are you from?</span>
+                      <span>02 — Preferred location in Siliguri?</span>
                       <input
                         value={form.location}
                         onChange={(e) => setField("location", e.target.value)}
@@ -937,7 +943,7 @@ function App() {
           </div>
           <div className="footer-links">
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/nolimits.exp/"
               target="_blank"
               rel="noreferrer"
               aria-label="Instagram"
