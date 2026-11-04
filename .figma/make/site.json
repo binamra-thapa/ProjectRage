@@ -1,0 +1,10 @@
+{
+  "description": "Explore a proposed Siliguri rage room, compare indicative packages, share feedback, and optionally reserve early access to help shape the experience.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
