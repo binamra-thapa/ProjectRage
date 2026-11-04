@@ -304,7 +304,8 @@ function App() {
         ...form,
         smash: form.smash.join(", "),
       })
-    } catch {
+    } catch (err) {
+      console.error("Feedback submission failed:", err)
       setError("Couldn't send your feedback. Please try again.")
       setSending(false)
       return
@@ -341,7 +342,8 @@ function App() {
         email: reservation.email.trim(),
         amount_intent: 99,
       })
-    } catch {
+    } catch (err) {
+      console.error("Reservation submission failed:", err)
       setReservationError("Couldn't send your details. Please try again.")
       setSending(false)
       return
