@@ -386,6 +386,9 @@
 }
 .process-item > span { color: var(--acid); font: 400 10px 'DM Mono'; }
 .process-item strong { font-size: 17px; font-weight: 500; }
+.process-item small { display: block; margin-top: 4px; font-size: 13px; font-weight: 400; opacity: .65; }
+.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+.concept-line { margin: 0 0 28px; font-size: 18px; line-height: 1.5; opacity: .75; }
 .process-item i {
   width: 32px;
   height: 32px;

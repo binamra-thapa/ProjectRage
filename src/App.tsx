@@ -1,18 +1,12 @@
-import {
-  FormEvent,
-  ReactNode,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react"
+// To restore pricing: import { FormEvent, ReactNode, useEffect, useMemo, useRef, useState } from "react"
+import { FormEvent, ReactNode, useMemo, useState } from "react"
 
 type FormData = {
   age: string
   location: string
   company: string
-  package: string
   price: string
+  lowerPrice: string
   smash: string[]
   length: string
   likelihood: string
@@ -23,8 +17,8 @@ const initialForm: FormData = {
   age: "",
   location: "",
   company: "",
-  package: "",
   price: "",
+  lowerPrice: "",
   smash: [],
   length: "",
   likelihood: "",
@@ -226,23 +220,24 @@ function App() {
   const [paid, setPaid] = useState(false)
   const [sending, setSending] = useState(false)
   const [feedbackId, setFeedbackId] = useState("")
-  const packagesRef = useRef<HTMLElement>(null)
 
-  useEffect(() => {
-    const node = packagesRef.current
-    if (!node) return
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          track("package_viewed")
-          observer.disconnect()
-        }
-      },
-      { threshold: 0.45 },
-    )
-    observer.observe(node)
-    return () => observer.disconnect()
-  }, [])
+  // Removed with the pricing section; restore alongside it (needs useEffect, useRef imports):
+  // const packagesRef = useRef<HTMLElement>(null)
+  // useEffect(() => {
+  //   const node = packagesRef.current
+  //   if (!node) return
+  //   const observer = new IntersectionObserver(
+  //     ([entry]) => {
+  //       if (entry.isIntersecting) {
+  //         track("package_viewed")
+  //         observer.disconnect()
+  //       }
+  //     },
+  //     { threshold: 0.45 },
+  //   )
+  //   observer.observe(node)
+  //   return () => observer.disconnect()
+  // }, [])
 
   const progress = useMemo(() => ((step + 1) / 3) * 100, [step])
 
@@ -273,7 +268,7 @@ function App() {
       step === 0
         ? form.age && form.location.trim() && form.company
         : step === 1
-          ? form.package && form.price && form.smash.length > 0
+          ? form.price && form.lowerPrice && form.smash.length > 0
           : form.length && form.likelihood
     if (!valid) {
       setError("Choose an answer for each question to continue.")
@@ -365,31 +360,40 @@ function App() {
             className="top-link"
             onClick={() => scrollTo("feedback", "feedback_started")}
           >
-            Shape the launch <Arrow />
+            Share your thoughts <Arrow />
           </button>
         </header>
 
         <div className="hero-grid page-shell">
           <div className="hero-copy">
             <div className="status-pill">
-              <span /> Siliguri · Coming soon
+              <span /> Siliguri · Concept stage
             </div>
-            <p className="hero-kicker">Rage Room Siliguri</p>
+            <p className="hero-kicker">An idea for Siliguri</p>
             <h1>
-              Break the
+              Would you try a
               <br />
-              <em>routine.</em>
+              <em>rage room?</em>
             </h1>
             <p className="hero-text">
-              A completely different entertainment experience we’re exploring
-              for Siliguri.
+              We’re exploring bringing a completely different entertainment
+              experience to Siliguri.
+              <br />
+              Before we build it, we want to hear from you.
             </p>
-            <Button
-              onClick={() => scrollTo("experience", "experience_cta_clicked")}
-            >
-              See the experience
-            </Button>
-            <p className="hero-note">Help us shape it before we launch.</p>
+            <div className="hero-actions">
+              <Button
+                onClick={() => scrollTo("experience", "experience_cta_clicked")}
+              >
+                Explore the idea
+              </Button>
+              <button
+                className="top-link"
+                onClick={() => scrollTo("feedback", "feedback_started")}
+              >
+                Share your thoughts <Arrow />
+              </button>
+            </div>
           </div>
           <div
             className="hero-visual"
@@ -421,9 +425,14 @@ function App() {
         <div className="page-shell">
           <SectionHeading
             eyebrow="The concept"
-            title="What exactly is a Rage Room?"
-            text="A controlled entertainment experience where you can smash approved items using provided tools and safety equipment."
+            title="What is a Rage Room?"
+            text="A controlled entertainment experience where you gear up, grab a provided tool, and smash approved breakable items in a purpose-built space."
           />
+          <p className="concept-line">
+            Think less “anger management.”
+            <br />
+            Think more “a completely different day out.”
+          </p>
           <div className="concept-grid">
             {[
               {
@@ -461,19 +470,22 @@ function App() {
       <section className="process-section section-pad">
         <div className="page-shell">
           <SectionHeading
-            eyebrow="Simple by design"
+            eyebrow="The proposed experience"
             title="How would it work?"
           />
           <div className="process-list">
             {[
-              "Choose your experience",
-              "Gear up",
-              "Smash",
-              "Capture the moment",
-            ].map((item, index) => (
+              ["Gear up", "Safety equipment provided"],
+              ["Choose your tool", "Provided for you"],
+              ["Smash", "Approved breakable items"],
+              ["Capture the moment", "Keep the memory"],
+            ].map(([item, note], index) => (
               <div className="process-item" key={item}>
                 <span>0{index + 1}</span>
-                <strong>{item}</strong>
+                <strong>
+                  {item}
+                  <small>{note}</small>
+                </strong>
                 {/* <i>
                   <Arrow direction="down" />
                 </i> */}
@@ -505,6 +517,7 @@ function App() {
         </div>
       </section>
 
+      {/* Removed for demand validation. Restore for future reference:
       <section
         className="pricing-section section-pad"
         id="packages"
@@ -582,6 +595,33 @@ function App() {
           </div>
         </div>
       </section>
+      */}
+
+      <section className="pricing-section section-pad">
+        <div className="page-shell">
+          <SectionHeading
+            eyebrow="Still in the works"
+            title="Help us shape the experience"
+          />
+          <p className="section-copy">
+            We’re still figuring out the details.
+            <br />
+            <br />
+            Who would you come with?
+            <br />
+            What would you want to smash?
+            <br />
+            How long should the experience be?
+            <br />
+            And what would feel worth paying for?
+          </p>
+          <Button
+            onClick={() => scrollTo("feedback", "pricing_feedback_clicked")}
+          >
+            Share your thoughts
+          </Button>
+        </div>
+      </section>
 
       <section className="feedback-intro section-pad">
         <div className="page-shell intro-grid">
@@ -610,7 +650,7 @@ function App() {
               <div className="form-header">
                 <div>
                   <p className="eyebrow">
-                    Your input shapes the price · 2 minutes
+                    Your input shapes the experience · 2 minutes
                   </p>
                   <h2>Shape the experience</h2>
                 </div>
@@ -653,6 +693,7 @@ function App() {
                 )}
                 {step === 1 && (
                   <div className="form-step">
+                    {/* Removed package question (restore with `package` in FormData/initialForm/nextStep):
                     <ChoiceGroup
                       label="04 — Which package sounds most interesting?"
                       options={[
@@ -664,6 +705,7 @@ function App() {
                       value={form.package}
                       onChange={(value) => setField("package", value)}
                     />
+                    Previous price question:
                     <ChoiceGroup
                       label="05 — What price feels reasonable?"
                       options={[
@@ -674,6 +716,25 @@ function App() {
                       ]}
                       value={form.price}
                       onChange={(value) => setField("price", value)}
+                    />
+                    */}
+                    <ChoiceGroup
+                      label="04 — What would you consider a reasonable price per person for a 15-20 minute Rage Room experience?"
+                      options={[
+                        "Under ₹300",
+                        "₹300 - ₹499",
+                        "₹500 - ₹699",
+                        "₹700 - ₹899",
+                        "₹900+",
+                      ]}
+                      value={form.price}
+                      onChange={(value) => setField("price", value)}
+                    />
+                    <ChoiceGroup
+                      label="05 — Would a lower per-person price make you more likely to bring friends?"
+                      options={["Yes", "No", "Doesn't matter"]}
+                      value={form.lowerPrice}
+                      onChange={(value) => setField("lowerPrice", value)}
                     />
                     <ChoiceGroup
                       label="06 — What would you most like to smash?"
@@ -974,8 +1035,8 @@ function App() {
             <a href="#early-terms">Early Access Terms</a>
           </div>
           <p className="disclaimer">
-            Concept currently under validation. Final experience, location,
-            packages and pricing may change.
+            Concept currently under validation. Final experience, location and
+            details may change.
           </p>
         </div>
       </footer>
