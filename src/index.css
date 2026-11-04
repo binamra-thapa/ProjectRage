@@ -686,9 +686,17 @@ input::placeholder, textarea::placeholder { color: #92948b; }
 .reserve-copy li::before { content: '↳'; position: absolute; left: 0; color: var(--orange); }
 .reserve-form { padding: 22px; background: #dedfd5; display: grid; gap: 18px; }
 .reserve-form label { font-size: 11px; font-weight: 700; display: grid; gap: 8px; }
-.payment-placeholder { border: 1px dashed #a0a299; padding: 16px; display: flex; flex-direction: column; gap: 5px; color: #7c7e75; }
-.payment-placeholder span { font: 400 9px 'DM Mono'; text-transform: uppercase; }
-.payment-placeholder b { font-size: 12px; color: #4e5049; }
+.intent-note {
+  padding: 15px;
+  border-left: 3px solid var(--acid);
+  background: var(--ink);
+  color: var(--paper);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.intent-note strong { font-size: 12px; }
+.intent-note span { color: #aeb0a7; font-size: 10px; line-height: 1.5; }
 .reserve-form .button { width: 100%; }
 .secure-note { margin: -4px 0 0; display: flex; justify-content: center; align-items: center; gap: 7px; color: #777970; font-size: 10px; }
 .secure-note svg { width: 14px; }
@@ -697,6 +705,15 @@ input::placeholder, textarea::placeholder { color: #92948b; }
 .success-icon svg { width: 100%; }
 .success-state h2 { font-size: clamp(62px, 15vw, 90px); margin: 0 0 16px; }
 .success-state > p:last-child { max-width: 440px; color: #696b63; line-height: 1.6; }
+.success-state > p:not(.eyebrow) {
+  max-width: 520px;
+  color: #696b63;
+  line-height: 1.65;
+}
+.success-state .success-followup {
+  margin: 6px 0 28px;
+  font-size: 12px;
+}
 
 .feedback-dock {
   position: fixed;

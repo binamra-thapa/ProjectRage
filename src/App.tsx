@@ -300,7 +300,7 @@ function App() {
     }
     setReservationError("")
     setPaid(true)
-    track("reservation_completed", { source: "prototype_payment" })
+    track("reservation_interest_confirmed", { amount_intent: 99 })
   }
 
   return (
@@ -706,12 +706,19 @@ function App() {
                   />
                 </svg>
               </div>
-              <p className="eyebrow">Reservation confirmed</p>
-              <h2>You’re in.</h2>
+              <p className="eyebrow">Interest confirmed</p>
+              <h2>You’re on the list.</h2>
               <p>
-                Your Early Access reservation is confirmed. We’ll contact you
-                before public bookings open.
+                No payment was taken. The ₹99 question helps us understand how
+                many people are genuinely interested—not generate revenue.
               </p>
+              <p className="success-followup">
+                If we move forward, we’ll contact you before public bookings
+                open.
+              </p>
+              <Button onClick={() => scrollTo("top")}>
+                Back to the main page
+              </Button>
             </div>
           ) : (
             <div className="early-access" id="early-access">
@@ -765,14 +772,14 @@ function App() {
                       <sup>₹</sup>99
                     </div>
                     <p>
-                      Reserve priority access to the first available booking
-                      slots.
+                      Tell us if you’d genuinely reserve priority access at this
+                      price.
                     </p>
                     <ul>
                       <li>
-                        ₹99 adjusted against your first booking if we launch
+                        ₹99 would be adjusted against your first booking if we
+                        launch
                       </li>
-                      <li>Clear refund terms shown before payment</li>
                     </ul>
                   </div>
                   <form className="reserve-form" onSubmit={reserve}>
@@ -820,16 +827,19 @@ function App() {
                         autoComplete="email"
                       />
                     </label>
-                    <div className="payment-placeholder">
-                      <span>UPI / Payment gateway</span>
-                      <b>Secure payment connects here</b>
+                    <div className="intent-note">
+                      <strong>No payment will be taken today.</strong>
+                      <span>
+                        This is an interest check to help us validate genuine
+                        demand.
+                      </span>
                     </div>
                     {reservationError && (
                       <p className="form-error" role="alert">
                         {reservationError}
                       </p>
                     )}
-                    <Button type="submit">Reserve Early Access — ₹99</Button>
+                    <Button type="submit">Confirm ₹99 interest</Button>
                     <p className="secure-note">
                       <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
                         <rect
@@ -845,7 +855,7 @@ function App() {
                           stroke="currentColor"
                         />
                       </svg>
-                      Secure payment · Prototype checkout
+                      Secure confirmation · No charge today
                     </p>
                   </form>
                 </div>
