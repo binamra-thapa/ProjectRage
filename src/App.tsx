@@ -1,6 +1,6 @@
 // To restore pricing: import { FormEvent, ReactNode, useEffect, useMemo, useRef, useState } from "react"
 import { FormEvent, ReactNode, useMemo, useState } from "react"
-import { Analytics } from '@vercel/analytics/react'
+import { Analytics } from "@vercel/analytics/react"
 
 type FormData = {
   age: string
@@ -271,7 +271,9 @@ function App() {
       step === 0
         ? form.age && form.location.trim() && form.company
         : step === 1
-          ? form.sessionDuration && form.reasonablePrice && form.smash.length > 0
+          ? form.sessionDuration &&
+            form.reasonablePrice &&
+            form.smash.length > 0
           : form.likelihood
     if (!valid) {
       setError("Choose an answer for each question to continue.")
