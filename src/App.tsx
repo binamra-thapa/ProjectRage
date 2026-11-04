@@ -710,7 +710,7 @@ function App() {
               <h2>You’re on the list.</h2>
               <p>
                 No payment was taken. The ₹99 question helps us understand how
-                many people are genuinely interested—not generate revenue.
+                many people are genuinely interested.
               </p>
               <p className="success-followup">
                 If we move forward, we’ll contact you before public bookings
