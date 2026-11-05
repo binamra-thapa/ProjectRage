@@ -1,5 +1,6 @@
 // To restore pricing: import { FormEvent, ReactNode, useEffect, useMemo, useRef, useState } from "react"
 import { FormEvent, ReactNode, useMemo, useState } from "react"
+import { Analytics } from '@vercel/analytics/react'
 
 type FormData = {
   age: string
@@ -1060,6 +1061,7 @@ function App() {
           </p>
         </div>
       </footer>
+      <Analytics />
     </main>
   )
 }
