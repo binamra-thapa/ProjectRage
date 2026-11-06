@@ -217,6 +217,9 @@
 }
 .button-primary { background: var(--acid); color: var(--ink); }
 .button-primary:hover { background: #e3ff75; }
+.form-section .button-primary { background: var(--ink); color: #fff; }
+.form-section .button-primary:hover { background: var(--ink); }
+.form-section .button:focus-visible, .form-section .choice:focus-visible, .form-section input:focus-visible, .form-section textarea:focus-visible { outline-color: var(--orange); }
 .button-secondary { background: transparent; color: inherit; border-color: currentColor; }
 .button-quiet { min-width: auto; background: none; color: inherit; border-color: transparent; padding-inline: 4px; }
 
@@ -662,10 +665,14 @@
   cursor: pointer;
   transition: border 150ms, background 150ms, color 150ms;
 }
-.choice.selected { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.choice.selected {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: #fff;
+}
 .radio-dot, .checkbox-dot { width: 9px; height: 9px; border: 1px solid currentColor; border-radius: 50%; }
 .checkbox-dot { border-radius: 1px; }
-.choice.selected .radio-dot, .choice.selected .checkbox-dot { background: var(--acid); border-color: var(--acid); }
+.choice.selected .radio-dot, .choice.selected .checkbox-dot { background: var(--ink); border-color: var(--ink); }
 input, textarea {
   width: 100%;
   color: var(--ink);
