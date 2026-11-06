@@ -318,6 +318,8 @@
   font-size: 15px;
 }
 
+.section-copy + .button { margin-top: 15px; background: var(--ink); color: var(--paper); }
+
 .concept-grid {
   display: grid;
   gap: 1px;
@@ -624,7 +626,7 @@
 }
 .intro-grid { display: grid; gap: 20px; }
 .feedback-intro h2 { font-size: clamp(60px, 16vw, 112px); margin: 0; }
-.feedback-intro em { color: var(--paper); }
+.feedback-intro .intro-grid h2 em, .feedback-intro h2 em { color: #fff; }
 .feedback-intro p:not(.eyebrow) { max-width: 480px; font-size: 15px; line-height: 1.7; margin: 28px 0; }
 .feedback-intro .button-primary { background: var(--ink); color: var(--paper); }
 
@@ -636,7 +638,7 @@
   color: var(--ink);
   padding: 24px;
   border-radius: 4px;
-  box-shadow: 0 -4px 0 var(--acid), 0 28px 80px rgba(0, 0, 0, .22);
+  box-shadow: 0 -4px 0 var(--orange), 0 28px 80px rgba(0, 0, 0, .22);
 }
 .form-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
 .form-header h2 { font-size: 38px; margin: 0; }
