@@ -1,6 +1,6 @@
 // To restore pricing: import { FormEvent, ReactNode, useEffect, useMemo, useRef, useState } from "react"
 import { FormEvent, ReactNode, useMemo, useState } from "react"
-import { Analytics } from '@vercel/analytics/react'
+// import { Analytics } from '@vercel/analytics/react'
 
 type FormData = {
   age: string
@@ -689,8 +689,9 @@ function App() {
                         "4+ Friends",
                         "Birthday / Group",
                       ]}
-                      value={form.company}
-                      onChange={(value) => setField("company", value)}
+                      value={form.smash}
+                      onChange={toggleSmash}
+                      multi
                     />
                   </div>
                 )}
@@ -1061,7 +1062,7 @@ function App() {
           </p>
         </div>
       </footer>
-      <Analytics />
+      {/* <Analytics /> */}
     </main>
   )
 }
