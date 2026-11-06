@@ -5,7 +5,7 @@ import { Analytics } from '@vercel/analytics/react'
 type FormData = {
   age: string
   location: string
-  company: string
+  company: string[]
   sessionDuration: string
   reasonablePrice: string
   expectsGroupDiscount: string
@@ -18,7 +18,7 @@ type FormData = {
 const initialForm: FormData = {
   age: "",
   location: "",
-  company: "",
+  company: [],
   sessionDuration: "",
   reasonablePrice: "",
   expectsGroupDiscount: "",
@@ -256,20 +256,20 @@ function App() {
     setForm((current) => ({ ...current, [key]: value }))
   }
 
-  const toggleSmash = (value: string) => {
+  const toggleMulti = (key: "smash" | "company", value: string) => {
     setError("")
     setForm((current) => ({
       ...current,
-      smash: current.smash.includes(value)
-        ? current.smash.filter((item) => item !== value)
-        : [...current.smash, value],
+      [key]: current[key].includes(value)
+        ? current[key].filter((item) => item !== value)
+        : [...current[key], value],
     }))
   }
 
   const nextStep = () => {
     const valid =
       step === 0
-        ? form.age && form.location.trim() && form.company
+        ? form.age && form.location.trim() && form.company.length > 0
         : step === 1
           ? form.sessionDuration && form.reasonablePrice && form.smash.length > 0
           : form.likelihood
@@ -300,6 +300,7 @@ function App() {
         type: "feedback",
         feedback_id: id,
         ...form,
+        company: form.company.join(", "),
         smash: form.smash.join(", "),
       })
     } catch (err) {
@@ -689,8 +690,8 @@ function App() {
                         "4+ Friends",
                         "Birthday / Group",
                       ]}
-                      value={form.smash}
-                      onChange={toggleSmash}
+                      value={form.company}
+                      onChange={(value) => toggleMulti("company", value)}
                       multi
                     />
                   </div>
@@ -767,7 +768,7 @@ function App() {
                         "Other",
                       ]}
                       value={form.smash}
-                      onChange={toggleSmash}
+                      onChange={(value) => toggleMulti("smash", value)}
                       multi
                     />
                   </div>

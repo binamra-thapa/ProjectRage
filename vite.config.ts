@@ -30,6 +30,10 @@ react(),
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),
+        // Fall back to a no-op stub when the package isn't installed (e.g. npm registry blocked locally).
+        ...(fs.existsSync(path.resolve(__dirname, 'node_modules/@vercel/analytics'))
+          ? {}
+          : { '@vercel/analytics/react': path.resolve(__dirname, './src/stubs/vercel-analytics-react.tsx') }),
       },
     },
     server: {

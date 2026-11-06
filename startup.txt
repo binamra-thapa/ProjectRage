@@ -2,6 +2,7 @@ cd "/Users/binamra.thapa/Desktop/Desktop-Bottomline/My/Devops/RageRoomSiliguriLa
 nvm use 22
 npm run dev
 copilot --resume=6c4146bf-94d0-4af7-8b2c-fc8d1dcb91e6
+ copilot --resume=eb3ff69e-e57e-4e5b-87c0-54f640b4d0d2
 script.google.com
 canva
 figma
